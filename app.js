@@ -54,6 +54,20 @@ app.put('/pokemon/:id',function (req,res){
     res.sendStatus(200)
 })
 
+app.delete('/pokemon/:id',(req,res)=>{
+    let id = req.params.id
+    if(!isSufficientParam(id)){
+        res.status(400).send({error:'Insufficient parameter : id is required parameter'})
+        return
+    }
+    if(!isPokemonExisted(id)){
+        res.status(400).send({error:'Pokemon is not found'})
+        return
+    }
+    delete poks[id-1]  
+    res.status(200).send("deleted")
+})
+
 app.listen(port,() => console.log(`Example app listening on port ${port}!`))
 
 function genId(num){
@@ -82,3 +96,6 @@ function editPokemon(id,name,type,type2){
     poks[id].secondaryType=type2
     }
 }
+    function isPokemonExisted(id){
+        return poks[id] !== undefined
+    }
