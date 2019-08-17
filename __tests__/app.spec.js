@@ -81,3 +81,15 @@ describe('Pokemon API', () => {
         })
     })
 })
+
+describe('Integration test',()=>{
+    it('GET /pokemons should return list of pokemons',(done)=>{
+        request('http://localhost:3000')
+        .get('/pokemons')
+        .expect(200)
+        .end((err, res) => {
+            res.body.should.be.an('array')
+            done()
+        })
+    })
+})
